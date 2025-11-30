@@ -5,9 +5,12 @@ import re
 import tweepy
 import pickle
 from tweepy import OAuthHandler
+from dotenv import load_dotenv
 
 vectorizer = pickle.load(open('vectorizer.sav', 'rb'))
 classifier = pickle.load(open('classifier.sav', 'rb'))
+
+load_dotenv()
 
 class TwitterClient(object):
     '''
@@ -15,10 +18,10 @@ class TwitterClient(object):
     '''
     def __init__(self, query, retweets_only=False, with_sentiment=False):
         # keys and tokens from the Twitter Dev Console
-        consumer_key = 'qkyZCE6zSkTSpGVDhQj1LBZSU'
-        consumer_secret = 'hKwUa2kyWb0AeobQMuAPTzeBBxWHPP6SDJ4WACxlyweapsHyMu'
-        access_token = '1014634292960362497-eqW1Cxg2e0AmKlE1z6goqdskXSJd9o'
-        access_token_secret = 'OLLX29LAlxeT8r2Yg59WN1jfk6tLHN0mwpL1Bwh8qZ6gb'
+        consumer_key = os.getenv("TWITTER_API_KEY")
+        consumer_secret = os.getenv("TWITTER_API_SECRET")
+        access_token = os.getenv("TWITTER_ACCESS_TOKEN")
+        access_token_secret = os.getenv("TWITTER_ACCESS_SECRET")
         # Attempt authentication
         try:
             self.auth = OAuthHandler(consumer_key, consumer_secret)
